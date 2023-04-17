@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
@@ -15,8 +15,16 @@ const routes: Routes = [
         (m) => m.NotFoundModule
       ),
   },
-  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
-  { path: 'login', loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule) },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/auth/login/login.module').then((m) => m.LoginModule),
+  },
 ];
 
 @NgModule({

@@ -1,1 +1,22 @@
-<p>sidebar works!</p>
+<mat-nav-list>
+  <a mat-list-item routerLink="/admin">
+    <mat-icon> insert_chart_outlined </mat-icon>
+    <span class="nav-link">Escritorio</span>
+  </a>
+  <a mat-list-item routerLink="/admin/ita-salud">
+    <mat-icon> home_health </mat-icon>
+    <span class="nav-link">Ita Salud</span>
+  </a>
+  <a mat-list-item routerLink="/admin/internacionDomiciliaria">
+    <mat-icon> people </mat-icon>
+    <span class="nav-link">Internación Domiciliaria</span>
+  </a>
+  <a mat-list-item routerLink="/admin/preocupacionales">
+    <mat-icon> people </mat-icon>
+    <span class="nav-link">Preocupacionales</span>
+  </a>
+  <a mat-list-item routerLink="/login" (click)="onExit()">
+    <mat-icon> exit_to_app </mat-icon>
+    <span class="nav-link">Salir</span>
+  </a>
+</mat-nav-list>
