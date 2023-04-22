@@ -9,6 +9,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { MaterialModule } from './material.module';
 import { HomeModule } from './pages/home/home.module';
 import { SidebarModule } from './shared/components/sidebar/sidebar.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
@@ -19,6 +20,7 @@ import { SidebarModule } from './shared/components/sidebar/sidebar.module';
     MaterialModule,
     HomeModule,
     SidebarModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

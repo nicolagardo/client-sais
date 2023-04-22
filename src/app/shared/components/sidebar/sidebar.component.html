@@ -3,18 +3,75 @@
     <mat-icon> insert_chart_outlined </mat-icon>
     <span class="nav-link">Escritorio</span>
   </a>
-  <a mat-list-item routerLink="/admin/ita-salud">
+  <!-- <a mat-list-item routerLink="/admin/ita-salud">
     <mat-icon> home_health </mat-icon>
     <span class="nav-link">Ita Salud</span>
-  </a>
-  <a mat-list-item routerLink="/admin/internacionDomiciliaria">
+  </a> -->
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> ITA SALUD </mat-panel-title>
+      <!-- <mat-panel-description> Ingreso Egreso </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <a
+      mat-list-item
+      routerLink="/admin/ita-salud"
+      style="background-color: aquamarine"
+    >
+      <mat-icon>
+        <span class="material-symbols-outlined"> list </span>
+      </mat-icon>
+      <span class="nav-link">Movimientos</span>
+    </a>
+    <a mat-list-item routerLink="/admin/ita-salud">
+      <mat-icon> build </mat-icon>
+      <span class="nav-link">Ajustes</span>
+    </a>
+  </mat-expansion-panel>
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> Internación Domiciliaria</mat-panel-title>
+      <!-- <mat-panel-description> Ingreso Egreso </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <a mat-list-item routerLink="/admin/ita-salud">
+      <mat-icon> list </mat-icon>
+      <span class="nav-link">Movimientos</span>
+    </a>
+    <a mat-list-item routerLink="/admin/ita-salud">
+      <mat-icon> build </mat-icon>
+      <span class="nav-link">Ajustes</span>
+    </a>
+  </mat-expansion-panel>
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> Preocupacionales</mat-panel-title>
+      <!-- <mat-panel-description> Ingreso Egreso </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <a mat-list-item routerLink="/admin/ita-salud">
+      <mat-icon> list </mat-icon>
+      <span class="nav-link">Movimientos</span>
+    </a>
+    <a mat-list-item routerLink="/admin/ita-salud">
+      <mat-icon> build </mat-icon>
+      <span class="nav-link">Ajustes</span>
+    </a>
+  </mat-expansion-panel>
+  <!-- <a mat-list-item routerLink="/admin/internacionDomiciliaria">
     <mat-icon> people </mat-icon>
     <span class="nav-link">Internación Domiciliaria</span>
-  </a>
-  <a mat-list-item routerLink="/admin/preocupacionales">
+  </a> -->
+  <!-- <a mat-list-item routerLink="/admin/preocupacionales">
     <mat-icon> people </mat-icon>
     <span class="nav-link">Preocupacionales</span>
-  </a>
+  </a> -->
   <a mat-list-item routerLink="/login" (click)="onExit()">
     <mat-icon> exit_to_app </mat-icon>
     <span class="nav-link">Salir</span>
