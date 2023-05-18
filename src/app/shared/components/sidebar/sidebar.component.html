@@ -15,11 +15,7 @@
       <mat-panel-title> ITA SALUD </mat-panel-title>
       <!-- <mat-panel-description> Ingreso Egreso </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <a
-      mat-list-item
-      routerLink="/admin/ita-salud"
-      style="background-color: aquamarine"
-    >
+    <a mat-list-item routerLink="/admin/ita-salud">
       <mat-icon>
         <span class="material-symbols-outlined"> list </span>
       </mat-icon>
@@ -34,10 +30,18 @@
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
   >
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header [class.mat-elevation-z0]="true" dense>
       <mat-panel-title> Internación Domiciliaria</mat-panel-title>
       <!-- <mat-panel-description> Ingreso Egreso </mat-panel-description> -->
     </mat-expansion-panel-header>
+    <mat-nav-list dense>
+      <a mat-list-item routerLink="#"
+        ><mat-icon>attach_money</mat-icon>Billing</a
+      >
+      <a mat-list-item routerLink="#"
+        ><mat-icon>notification_important</mat-icon>Notification</a
+      >
+    </mat-nav-list>
     <a mat-list-item routerLink="/admin/ita-salud">
       <mat-icon> list </mat-icon>
       <span class="nav-link">Movimientos</span>

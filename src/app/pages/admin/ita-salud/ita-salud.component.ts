@@ -2,6 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatTable } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalMovimientosComponent } from '../components/modal-movimientos/modal-movimientos.component';
+import { FormBuilder } from '@angular/forms';
+import { Movimiento, TIPO } from 'src/app/interfaces/formMovimientos';
+import { DataService } from 'src/app/services/data.service';
 export interface Tile {
   color: string;
   cols: number;
@@ -14,18 +19,11 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
-export interface Movimiento {
-  tipo: string;
-  description: string;
-  category: string;
-  amount: number;
-  date: Date;
-}
 
 const CATEGORIES: Array<string> = ['farmacia', 'alquiler', 'otros'];
 const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
   {
-    tipo: 'INGRESO',
+    tipo: 'EGRESO',
     description: 'fotocopias',
     category: 'farmacia',
     amount: 100,
@@ -39,7 +37,21 @@ const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
     date: new Date('2023/12/01'),
   },
   {
-    tipo: 'INGRESO',
+    tipo: 'EGRESO',
+    description: 'fotocopias',
+    category: 'farmacia',
+    amount: 100,
+    date: new Date('2023/12/01'),
+  },
+  {
+    tipo: 'EGRESO',
+    description: 'fotocopias',
+    category: 'farmacia',
+    amount: 100,
+    date: new Date('2023/12/01'),
+  },
+  {
+    tipo: 'EGRESO',
     description: 'fotocopias',
     category: 'farmacia',
     amount: 100,
@@ -65,7 +77,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./ita-salud.component.scss'],
 })
 export class ItaSaludComponent implements OnInit {
-  constructor() {}
+  selection!: Movimiento;
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+    private readonly dataSvc: DataService
+  ) {}
 
   displayedColumns: string[] = [
     'tipo',
@@ -79,14 +96,25 @@ export class ItaSaludComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Movimiento> | undefined;
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
+  onOpenModal(movimiento = {}): void {
+    console.log('movimiento ->', movimiento);
 
+    const dialogRef = this.dialog.open(ModalMovimientosComponent, {
+      data: { title: 'Formulario', movimiento },
+    });
+    console.log('dialogRef->', dialogRef.componentInstance.data.movimiento);
+    console.log('data->', movimiento);
+  }
   addData() {
-    const randomElementIndex = Math.floor(
-      Math.random() * ELEMENT_DATA_MOVEMENTS.length
-    );
     this.dataToDisplay = [
       ...this.dataToDisplay,
-      ELEMENT_DATA_MOVEMENTS[randomElementIndex],
+      {
+        tipo: 'EGRESO',
+        description: 'test',
+        category: 'nuevo',
+        amount: 0,
+        date: new Date('01/01/1999'),
+      },
     ];
     this.dataSource.setData(this.dataToDisplay);
   }
@@ -96,7 +124,12 @@ export class ItaSaludComponent implements OnInit {
     this.dataSource.setData(this.dataToDisplay);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataSvc.selectedRow$.subscribe((row) => (this.selection = row));
+  }
+  onRowSelected(mov: Movimiento) {
+    this.dataSvc.setRow(mov);
+  }
 }
 
 class ExampleDataSource extends DataSource<Movimiento> {

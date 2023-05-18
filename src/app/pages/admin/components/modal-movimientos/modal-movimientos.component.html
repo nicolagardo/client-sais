@@ -1,1 +1,64 @@
-<p>modal-movimientos works!</p>
+{{ data.movimiento | json }}
+<h1>{{ (selectedRow$ | async)?.tipo }}</h1>
+<h2 mat-dialog-title>{{ data?.title }}</h2>
+<button mat-raised-button>cambiar</button>
+<mat-dialog-content>
+  <div class="modal-form">
+    <form [formGroup]="movimientoForm">
+      <mat-form-field class="full-width-input">
+        <mat-label>Movimiento</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="ingreso">INGRESO</mat-option>
+          <mat-option value="egreso">EGRESO</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="ingreso">Farmacia</mat-option>
+          <mat-option value="egreso">Alquiler</mat-option>
+          <mat-option value="egreso">Otros</mat-option>
+          <mat-option value="egreso">Fotocopias</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="amount"
+          type="number"
+          matInput
+          placeholder="Monto"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="description"
+          matInput
+          placeholder="Descripción"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input
+          formControlName="date"
+          type="date"
+          matInput
+          placeholder="Fecha"
+          required
+        />
+      </mat-form-field>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    color="primary"
+    (click)="onSave()"
+    cdkFocusInitial
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>
