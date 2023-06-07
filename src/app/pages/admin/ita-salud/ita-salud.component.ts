@@ -19,6 +19,7 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+const hoy = Date.now();
 
 const CATEGORIES: Array<string> = ['farmacia', 'alquiler', 'otros'];
 const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
@@ -55,7 +56,7 @@ const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
     description: 'fotocopias',
     category: 'farmacia',
     amount: 100,
-    date: new Date('2023/12/01'),
+    date: Date.now(),
   },
 ];
 
@@ -77,7 +78,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./ita-salud.component.scss'],
 })
 export class ItaSaludComponent implements OnInit {
-  selection!: Movimiento;
+  selected!: Movimiento;
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
@@ -93,7 +94,7 @@ export class ItaSaludComponent implements OnInit {
     'actions',
   ];
   dataToDisplay = [...ELEMENT_DATA_MOVEMENTS];
-  @ViewChild(MatTable) table: MatTable<Movimiento> | undefined;
+  // @ViewChild(MatTable) table!: MatTable<Movimiento>;
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
   onOpenModal(movimiento = {}): void {
@@ -106,16 +107,7 @@ export class ItaSaludComponent implements OnInit {
     console.log('data->', movimiento);
   }
   addData() {
-    this.dataToDisplay = [
-      ...this.dataToDisplay,
-      {
-        tipo: 'EGRESO',
-        description: 'test',
-        category: 'nuevo',
-        amount: 0,
-        date: new Date('01/01/1999'),
-      },
-    ];
+    this.dataToDisplay = [...this.dataToDisplay, this.selected];
     this.dataSource.setData(this.dataToDisplay);
   }
 
@@ -125,11 +117,12 @@ export class ItaSaludComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataSvc.selectedRow$.subscribe((row) => (this.selection = row));
+    this.dataSvc.selectedRow$.subscribe((row) => (this.selected = row));
+    console.log('selected ->', this.selected);
   }
-  onRowSelected(mov: Movimiento) {
-    this.dataSvc.setRow(mov);
-  }
+  // onRowSelected(mov: Movimiento) {
+  //   this.dataSvc.setRow(mov);
+  // }
 }
 
 class ExampleDataSource extends DataSource<Movimiento> {

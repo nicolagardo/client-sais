@@ -1,13 +1,14 @@
 {{ data.movimiento | json }}
-<h1>{{ (selectedRow$ | async)?.tipo }}</h1>
+<h1>selected {{ (selectedRow$ | async)?.tipo }}</h1>
 <h2 mat-dialog-title>{{ data?.title }}</h2>
+<p>data -> {{ data?.movimiento.category }}</p>
 <button mat-raised-button>cambiar</button>
 <mat-dialog-content>
   <div class="modal-form">
     <form [formGroup]="movimientoForm">
       <mat-form-field class="full-width-input">
         <mat-label>Movimiento</mat-label>
-        <mat-select formControlName="type">
+        <mat-select [value]="data.movimiento.tipo" formControlName="tipo">
           <mat-option value="ingreso">INGRESO</mat-option>
           <mat-option value="egreso">EGRESO</mat-option>
         </mat-select>
@@ -15,10 +16,10 @@
       <mat-form-field class="full-width-input">
         <mat-label>Categoría</mat-label>
         <mat-select formControlName="category">
-          <mat-option value="ingreso">Farmacia</mat-option>
-          <mat-option value="egreso">Alquiler</mat-option>
-          <mat-option value="egreso">Otros</mat-option>
-          <mat-option value="egreso">Fotocopias</mat-option>
+          <mat-option value="Farmacia">Farmacia</mat-option>
+          <mat-option value="alquiler">Alquiler</mat-option>
+          <mat-option value="otros">Otros</mat-option>
+          <mat-option value="fotocopias">Fotocopias</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="full-width-input">
@@ -32,6 +33,7 @@
       </mat-form-field>
       <mat-form-field class="full-width-input">
         <input
+          [(ngModel)]="selected"
           formControlName="description"
           matInput
           placeholder="Descripción"

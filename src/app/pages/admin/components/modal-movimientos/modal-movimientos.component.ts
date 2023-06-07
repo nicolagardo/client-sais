@@ -25,18 +25,20 @@ export class ModalMovimientosComponent implements OnInit {
   // setFila(data: any) {
   //   this.fila$.next(data);
   // }
+  selected? = this.data.movimiento.description;
   selectedRow$ = this.dataSvc.selectedRow$;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly fb: FormBuilder,
     private readonly dataSvc: DataService
   ) {}
+
   movimientoForm: FormGroup = this.fb.group({
-    tipo: [''],
+    tipo: this.data ? this.data.movimiento.tipo : [''],
     description: [''],
-    category: [''],
-    amount: [0],
-    date: [new Date()],
+    category: this.data ? this.data.movimiento.category : [''],
+    amount: this.data ? this.data.movimiento.amount : [''],
+    date: this.data ? this.data.movimiento.date : [Date.now()],
   });
 
   onChangeMov(row: Movimiento): void {
@@ -46,7 +48,7 @@ export class ModalMovimientosComponent implements OnInit {
   onSave(): void {
     const formValue: Movimiento = this.movimientoForm.value;
     console.log('formValue ->', formValue);
-    this.dataSvc.setRow(mov);
+    this.dataSvc.setRow(formValue);
   }
   ngOnInit(): void {}
 }

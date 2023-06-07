@@ -1,5 +1,5 @@
 <h1>Ingresos y Egresos</h1>
-<p>test: {{ null }}</p>
+<p>test: {{ selected | json }}</p>
 <div class="demo-button-container">
   <button mat-raised-button (click)="onOpenModal()" class="demo-button">
     Agregar movimiento
@@ -21,7 +21,7 @@
   <!-- Position Column -->
   <ng-container matColumnDef="tipo">
     <th mat-header-cell *matHeaderCellDef>Tipo</th>
-    <td id="tipo" mat-cell *matCellDef="let element">{{ element.type }}</td>
+    <td id="tipo" mat-cell *matCellDef="let element">{{ element.tipo }}</td>
   </ng-container>
 
   <!-- Name Column -->
