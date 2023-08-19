@@ -8,7 +8,7 @@
     <form [formGroup]="movimientoForm">
       <mat-form-field class="full-width-input">
         <mat-label>Movimiento</mat-label>
-        <mat-select [value]="data.movimiento.tipo" formControlName="tipo">
+        <mat-select formControlName="tipo">
           <mat-option value="ingreso">INGRESO</mat-option>
           <mat-option value="egreso">EGRESO</mat-option>
         </mat-select>
@@ -33,7 +33,6 @@
       </mat-form-field>
       <mat-form-field class="full-width-input">
         <input
-          [(ngModel)]="selected"
           formControlName="description"
           matInput
           placeholder="Descripción"

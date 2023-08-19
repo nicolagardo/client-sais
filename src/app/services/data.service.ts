@@ -21,4 +21,7 @@ export class DataService {
   setRow(row: Movimiento): void {
     this.fila$.next(row);
   }
+  // addDataSvc(row:Movimiento):object{
+  //   return row.
+  // }
 }

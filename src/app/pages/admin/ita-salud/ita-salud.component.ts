@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatTable } from '@angular/material/table';
@@ -7,18 +15,7 @@ import { ModalMovimientosComponent } from '../components/modal-movimientos/modal
 import { FormBuilder } from '@angular/forms';
 import { Movimiento, TIPO } from 'src/app/interfaces/formMovimientos';
 import { DataService } from 'src/app/services/data.service';
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+
 const hoy = Date.now();
 
 const CATEGORIES: Array<string> = ['farmacia', 'alquiler', 'otros'];
@@ -49,7 +46,7 @@ const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
     description: 'fotocopias',
     category: 'farmacia',
     amount: 100,
-    date: new Date('2023/12/01'),
+    date: new Date('2023/12/12'),
   },
   {
     tipo: 'EGRESO',
@@ -60,30 +57,35 @@ const ELEMENT_DATA_MOVEMENTS: Movimiento[] = [
   },
 ];
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
 @Component({
   selector: 'app-ita-salud',
   templateUrl: './ita-salud.component.html',
   styleUrls: ['./ita-salud.component.scss'],
 })
-export class ItaSaludComponent implements OnInit {
+export class ItaSaludComponent implements OnInit, OnDestroy {
   selected!: Movimiento;
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
     private readonly dataSvc: DataService
   ) {}
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  ngOnInit(): void {
+    this.dataSvc.selectedRow$.subscribe((row) => (this.selected = row));
+    console.log('selected ->', this.selected);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('en el changes');
+
+    if (changes['selected'].currentValue != changes['selected'].previousValue) {
+      this.addData();
+      console.log('En el onChanges en el if');
+    }
+  }
 
   displayedColumns: string[] = [
     'tipo',
@@ -116,10 +118,6 @@ export class ItaSaludComponent implements OnInit {
     this.dataSource.setData(this.dataToDisplay);
   }
 
-  ngOnInit(): void {
-    this.dataSvc.selectedRow$.subscribe((row) => (this.selected = row));
-    console.log('selected ->', this.selected);
-  }
   // onRowSelected(mov: Movimiento) {
   //   this.dataSvc.setRow(mov);
   // }
